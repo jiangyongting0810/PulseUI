@@ -1,14 +1,17 @@
 <template>
-  <Frank/>
+  <div>
+    <div>
+      导航栏
+      <router-link to = '/xxx'>frank2</router-link>
+    </div>
+    <router-view />
+  </div>
 </template>
 
 <script>
-import Frank from './components/Frank.vue'
 
 export default{
   name: 'App',
-  components: {
-    Frank
-  }
+
 }
 </script>
