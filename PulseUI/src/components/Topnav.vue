@@ -48,7 +48,10 @@ export default{
       background: red;
       position: absolute;
       left: 16px;
-      top:50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
       transform: translateY(-50%);
       display: none;
     }
