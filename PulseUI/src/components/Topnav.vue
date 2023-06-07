@@ -28,8 +28,14 @@ export default{
     background: pink;
     display: flex;
     padding: 16px;
-    position: relative;
+    // position: relative;
     z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
     > .logo{
       max-width: 6em;
       margin-right: auto;
@@ -42,16 +48,13 @@ export default{
       }
     }
     >.toggleAside{
-      // display: inline-block;
       width: 24px;
       height: 24px;
       background: red;
       position: absolute;
       left: 16px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
+      top: 50%;
+      left: 16px;
       transform: translateY(-50%);
       display: none;
     }
