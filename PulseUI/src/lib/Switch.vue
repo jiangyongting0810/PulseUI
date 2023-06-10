@@ -23,4 +23,7 @@ $h2:$h - 4px;
     border-radius: $h2 / 2;
     box-shadow: inset 0px 0px 10px #D5F1EC;
   }
+  button:hover > span {
+    left: calc(100% - #{$h2} - 2px);
+  }
 </style>
