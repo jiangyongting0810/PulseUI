@@ -46,5 +46,21 @@ $radius: 6px;
   &::-moz-focus-inner {
     border: 0;
   }
+  &.pulse-theme-link{
+    border-color: transparent;
+    box-shadow: none;
+    color: $green;
+    &:hover,&:focus{
+      color: lighten($green, 10%);
+    }
+  }
+  &.gulu-theme-text{
+    border-color: transparent;
+    box-shadow: none;
+    color: inherit;
+    &:hover,&:focus{
+      background: darken(white, 5%);
+    }
+  }
 }
 </style>
