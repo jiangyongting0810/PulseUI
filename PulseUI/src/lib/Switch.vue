@@ -31,6 +31,12 @@ $h2:$h - 4px;
     border-radius: $h / 2;
     position: relative;
     box-shadow: inset 0px 0px 0px 1px rgb(255, 255, 255);
+    &:active{
+      > span {width: $h2 + 4px;}
+    }
+    &.checked:active{
+    > span {width: $h2 + 4px; margin-left: -4px;}
+  }
   }
   span{
     position: absolute;
