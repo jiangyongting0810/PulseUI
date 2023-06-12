@@ -4,10 +4,15 @@
   </div>
   <h1>示例1</h1>
   <div>
-    <Button @click="onClick"
-    @focus="onClick"
-    @mouseout="onClick"
-    >你好</Button>
+    <Button theme="button">你好</Button>
+    <Button theme="link">你好</Button>
+    <Button theme="text">你好</Button>
+  </div>
+  <h1>示例2</h1>
+  <div>
+    <Button size="big">大号</Button>
+    <Button>普通</Button>
+    <Button size="small">小号</Button>
   </div>
 </template>
 <script lang="ts">

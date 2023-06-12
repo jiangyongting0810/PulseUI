@@ -1,16 +1,33 @@
 <template>
-  <button class="pulse-button" :class="{[`pulse-theme-${theme}`]: theme}">
+  <button class="pulse-button" :class="classes">
     <slot />
   </button>
 </template>
 <script lang="ts">
+import { computed } from 'vue';
+
 export default{
   props:{
     theme:{
     type:String,
-    default:'button'}
+    default:'button'},
+    size:{
+      type:String,
+      default:'normal'
+    },
   },
+  setup(props){
+    const { theme ,size } = props;
+    const classes = computed(()=>{
+      return {
+        [`pulse-theme-${theme}`]: theme,
+        [`pulse-size-${size}`]: size,
+      }
+    })
+    return {classes}
+  }
 }
+
 </script>
 <style lang="scss">
 $h: 32px;
@@ -54,12 +71,25 @@ $radius: 6px;
       color: lighten($green, 10%);
     }
   }
-  &.gulu-theme-text{
+  &.pulse-theme-text{
     border-color: transparent;
     box-shadow: none;
     color: inherit;
+    background: none;
     &:hover,&:focus{
       background: darken(white, 5%);
+    }
+  }
+  &.pulse-theme-button{
+    &.pulse-size-big{
+      font-size:24px;
+      height: 48px;
+      padding: 0 16px;
+    }
+    &.pulse-size-small{
+      font-size: 12px;
+      height: 20px;
+      padding: 0 4px; 
     }
   }
 }
