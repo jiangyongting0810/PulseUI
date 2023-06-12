@@ -80,17 +80,15 @@ $radius: 6px;
       background: darken(white, 5%);
     }
   }
-  &.pulse-theme-button{
-    &.pulse-size-big{
-      font-size:24px;
-      height: 48px;
-      padding: 0 16px;
-    }
-    &.pulse-size-small{
-      font-size: 12px;
-      height: 20px;
-      padding: 0 4px; 
-    }
+  &.pulse-size-big{
+    font-size:24px;
+    height: 48px;
+    padding: 0 16px;
+  }
+  &.pulse-size-small{
+    font-size: 12px;
+    height: 20px;
+    padding: 0 4px; 
   }
 }
 </style>
