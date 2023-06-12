@@ -1,5 +1,5 @@
 <template>
-  <button class="pulse-button" :class="classes">
+  <button class="pulse-button" :class="classes" :disabled="disabled">
     <slot />
   </button>
 </template>
@@ -18,6 +18,10 @@ export default{
     level:{
       type:String,
       default:'normal'
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props){
@@ -41,6 +45,7 @@ $color: #333;
 $green: #327261;
 $radius: 6px;
 $red: red;
+$grey: grey;
 .pulse-button {
   box-sizing: border-box;
   height: $h;
@@ -142,6 +147,21 @@ $red: red;
       &:focus {
         color: darken($red, 10%);
       }
+    }
+  }
+  &.pulse-theme-button {
+    &[disabled] {
+      cursor: not-allowed;
+      color: $grey;
+      &:hover {
+        border-color: $grey;
+      }
+    }
+  }
+  &.pulse-theme-link, &.pulse-theme-text {
+    &[disabled] {
+      cursor: not-allowed;
+      color: $grey;
     }
   }
 }
