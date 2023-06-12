@@ -15,13 +15,18 @@ export default{
       type:String,
       default:'normal'
     },
+    level:{
+      type:String,
+      default:'normal'
+    },
   },
   setup(props){
-    const { theme ,size } = props;
+    const { theme ,size, level} = props;
     const classes = computed(()=>{
       return {
         [`pulse-theme-${theme}`]: theme,
         [`pulse-size-${size}`]: size,
+        [`pulse-level-${level}`]:level,
       }
     })
     return {classes}
@@ -35,6 +40,7 @@ $border-color: #d9d9d9;
 $color: #333;
 $green: #327261;
 $radius: 6px;
+$red: red;
 .pulse-button {
   box-sizing: border-box;
   height: $h;
@@ -49,6 +55,7 @@ $radius: 6px;
   border: 1px solid $border-color;
   border-radius: $radius;
   box-shadow: 0 1px 0 fade-out(black, 0.95);
+  transition: background 250ms;
   & + & {
     margin-left: 8px;
   }
@@ -89,6 +96,53 @@ $radius: 6px;
     font-size: 12px;
     height: 20px;
     padding: 0 4px; 
+  }
+  &.pulse-theme-button {
+    &.pulse-level-main {
+      background: $green;
+      color: white;
+      border-color: $green;
+      &:hover,
+      &:focus {
+        background: darken($green, 10%);
+        border-color: darken($green, 10%);
+      }
+    }
+    &.pulse-level-danger {
+      background: $red;
+      border-color: $red;
+      color: white;
+      &:hover,
+      &:focus {
+        background: darken($red, 10%);
+        border-color: darken($red, 10%);
+      }
+    }
+  }
+  &.pulse-theme-link {
+    &.pulse-level-danger {
+      color: $red;
+      &:hover,
+      &:focus {
+        color: darken($red, 10%);
+      }
+    }
+  }
+  &.pulse-theme-text {
+    &.pulse-level-main {
+      color: $green;
+      &:hover,
+      &:focus {
+        color: darken($green, 10%);
+      }
+    }
+    &.pulse-level-danger {
+      color: $red;
+      &:hover,
+      &:focus {
+        color: darken($red, 10%);
+      }
+    }
   }
 }
 </style>
