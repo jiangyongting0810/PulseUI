@@ -1,23 +1,25 @@
 <template>
   <template v-if="visible">
-    <div class="pulse-dialog-overlay"
-    @click="closeOnClickOverlay"></div>
-    <div class="pulse-dialog-wrapper">
-      <div class="pulse-dialog">
-        <header>
-          <slot name="title"/>
-          <span @click="close" class="pulse-dialog-close"></span>
-        </header>
-        <main>
-          <slot name="content"/>
-        </main>
-        
-        <footer>
-          <Button level="main" @click="ok">OK</Button>
-          <Button @click="cancel">Cancel</Button>
-        </footer>
+    <Teleport to="body">
+      <div class="pulse-dialog-overlay"
+      @click="closeOnClickOverlay"></div>
+      <div class="pulse-dialog-wrapper">
+        <div class="pulse-dialog">
+          <header>
+            <slot name="title"/>
+            <span @click="close" class="pulse-dialog-close"></span>
+          </header>
+          <main>
+            <slot name="content"/>
+          </main>
+          
+          <footer>
+            <Button level="main" @click="ok">OK</Button>
+            <Button @click="cancel">Cancel</Button>
+          </footer>
+        </div>
       </div>
-    </div>
+    </Teleport>
   </template>
 </template>
 
