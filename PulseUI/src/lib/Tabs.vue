@@ -2,12 +2,14 @@
   <div class="pulse-tabs">
    <div class="pulse-tabs-nav">
      <div class="pulse-tabs-nav-item" v-for="(t,index) in titles" @click="select(t)" :class="{selected: t=== selected}" :key="index">{{t}}</div>
+      <div class="pulse-tabs-nav-indicator"></div>
   </div>
    <div class="pulse-tabs-content">
-     <component class="pulse-tabs-content-item" :class="{selected:c.props.title === selected}"  v-for="c in defaults" :is="c" />
+     <component class="pulse-tabs-content-item" :class="{selected:c.props?.title === selected}"  v-for="c in defaults" :is="c" />
    </div>
  </div>
  </template>
+ 
  <script lang="ts">
 import { computed } from 'vue';
  import Tab from './Tab.vue';
@@ -15,6 +17,7 @@ import { computed } from 'vue';
    props:{
      selected:{
        type:String,
+       required:true
      },
    },
    setup(props,context){
@@ -28,7 +31,7 @@ import { computed } from 'vue';
        const current = computed(()=>{
         console.log('重新return')
         return defaults.filter((tag)=>{
-          return tag.props.title === props.selected
+          return tag.props?.title === props.selected
         })[0]
        })
        const titles = defaults.map((tag)=>{
@@ -41,9 +44,15 @@ import { computed } from 'vue';
          defaults,
          titles,
          current,
-         select
+         select,
        }
      }
+     return {
+      defaults: [],
+      titles: [], // 添加默认的空数组作为默认值
+      current: null, // 添加默认的空值作为默认值
+      select: () => {} // 添加空函数作为默认值
+    }
    }
  }
  </script>
@@ -56,6 +65,7 @@ import { computed } from 'vue';
      display: flex;
      color: $color;
      border-bottom: 1px solid $border-color;
+     position: relative;
      &-item {
        padding: 8px 0;
        margin: 0 16px;
@@ -67,6 +77,14 @@ import { computed } from 'vue';
          color: $blue;
        }
      }
+     &-indicator {
+      position: absolute;
+      height: 3px;
+      background: $blue;
+      left: 0;
+      bottom: -1px;
+      width: 100px;
+    }
    }
    &-content {
      padding: 8px 0;
