@@ -16,7 +16,7 @@
  </template>
  
  <script lang="ts">
-import { computed, onMounted, onUpdated, ref } from 'vue';
+import { computed, onMounted, onUpdated, ref, watchEffect } from 'vue';
  import Tab from './Tab.vue';
  export default{
    props:{
@@ -39,18 +39,15 @@ import { computed, onMounted, onUpdated, ref } from 'vue';
     }
     onMounted(x)
     onUpdated(x)
+
+
+
      const defaults = context.slots.default?.()
      if(defaults){
        defaults.forEach((tag)=>{
          if(tag.type !== Tab){
            throw new Error('Tabs 子标签必须是 Tab')
          }
-       })
-       const current = computed(()=>{
-        console.log('重新return')
-        return defaults.filter((tag)=>{
-          return tag.props?.title === props.selected
-        })[0]
        })
        const titles = defaults.map((tag)=>{
          return tag.props?.title
@@ -61,7 +58,6 @@ import { computed, onMounted, onUpdated, ref } from 'vue';
        return {
          defaults,
          titles,
-         current,
          select,
          indicator,
          container,
