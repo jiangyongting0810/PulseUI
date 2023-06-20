@@ -1,8 +1,13 @@
 <template>
   <div class="pulse-tabs">
-   <div class="pulse-tabs-nav">
-     <div class="pulse-tabs-nav-item" v-for="(t,index) in titles" @click="select(t)" :class="{selected: t=== selected}" :key="index">{{t}}</div>
-      <div class="pulse-tabs-nav-indicator"></div>
+   <div class="pulse-tabs-nav" ref="container">
+     <div class="pulse-tabs-nav-item" 
+      v-for="(t,index) in titles" 
+      :ref="el => {if (t===selected) selectedItem = el}"
+      @click="select(t)" 
+      :class="{selected: t=== selected}" 
+      :key="index">{{t}}</div>
+      <div class="pulse-tabs-nav-indicator" ref="indicator"></div>
   </div>
    <div class="pulse-tabs-content">
      <component class="pulse-tabs-content-item" :class="{selected:c.props?.title === selected}"  v-for="c in defaults" :is="c" />
@@ -11,7 +16,7 @@
  </template>
  
  <script lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, onUpdated, ref } from 'vue';
  import Tab from './Tab.vue';
  export default{
    props:{
@@ -21,6 +26,19 @@ import { computed } from 'vue';
      },
    },
    setup(props,context){
+    const selectedItem = ref<HTMLDivElement>(null)
+    const indicator = ref<HTMLDivElement>(null)
+    const container = ref<HTMLDivElement>(null)
+    const x = () =>{
+      const {width} = selectedItem.value.getBoundingClientRect()
+      indicator.value.style.width = width + 'px'
+      const {left:left1} = container.value.getBoundingClientRect()
+      const {left:left2} = selectedItem.value.getBoundingClientRect()
+      const left = left2-left1
+      indicator.value.style.left = left + 'px'
+    }
+    onMounted(x)
+    onUpdated(x)
      const defaults = context.slots.default?.()
      if(defaults){
        defaults.forEach((tag)=>{
@@ -37,7 +55,7 @@ import { computed } from 'vue';
        const titles = defaults.map((tag)=>{
          return tag.props?.title
        })
-       const select = (title: string) => {
+       const select = (title:string) => {
          context.emit('update:selected', title)
        }
        return {
@@ -45,6 +63,9 @@ import { computed } from 'vue';
          titles,
          current,
          select,
+         indicator,
+         container,
+         selectedItem
        }
      }
      return {
@@ -84,6 +105,7 @@ import { computed } from 'vue';
       left: 0;
       bottom: -1px;
       width: 100px;
+      transition: all 250ms;
     }
    }
    &-content {
