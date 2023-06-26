@@ -73,7 +73,7 @@ export default {
   > main {
     flex-grow: 1;
     padding: 16px;
-    background: rgb(246, 248, 250);
+    background: rgb(255, 255, 255);
     // background-image: url("../assets/img/Mask\ group.jpg");
     // background-repeat: no-repeat;
     // background-size: cover;
