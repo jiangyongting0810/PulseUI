@@ -1,6 +1,7 @@
 <template>
 <div>
   <h1>Switch 组件示例 </h1>
+  <Demo :component="Switch1Demo"/>
   <div class="demo">
     <h2>常规用法</h2>
     <div class="demo-component">
@@ -38,6 +39,7 @@ import {
 import Switch2Demo from './Switch2.demo.vue'
 import 'prismjs';
 import 'prismjs/themes/prism.css'
+import Demo from './Demo.vue'
 
 const Prism = (window as any).Prism
 
@@ -46,7 +48,8 @@ export default {
     Switch,
     Button,
     Switch1Demo,
-    Switch2Demo
+    Switch2Demo,
+    Demo
 },
   setup() {
     const bool = ref(false)
