@@ -1,6 +1,6 @@
 <template>
   <div class="topnavAndBanner">
-    <Topnav />
+    <!-- <Topnav /> -->
     <div class="banner">
       <h1>PulseUI</h1>
       <h2>一个厉害的 UI 框架</h2>
@@ -56,13 +56,13 @@
   }
   .features {
     margin: 64px auto;
-  width: 400px;
-  @media (min-width: 800px) {
-    width: 800px;
-  }
-  @media (min-width: 1200px) {
-    width: 1200px;
-  }
+    padding: 0 16px;
+    @media (min-width: 800px) {
+      width: 800px;
+    }
+    @media (min-width: 1200px) {
+      width: 1200px;
+    }
   >ul {
     display: flex;
     flex-wrap: wrap;
