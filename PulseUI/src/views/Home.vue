@@ -24,7 +24,7 @@
           <use xlink:href="#icon-typescript"></use>
         </svg>
         <h3>基于 TypeScript </h3>
-        <p>源代码采用 TypeScript 书写（非严格检查）</p>
+        <p>源代码采用 TypeScript 书写</p>
       </li>
       <li>
         <svg>
@@ -62,10 +62,14 @@
     }
     @media (min-width: 1200px) {
       width: 1200px;
+      >ul{
+        width: 1200px;
+      }
     }
   >ul {
     display: flex;
     flex-wrap: wrap;
+
     >li {
       width: 400px;
       margin: 16px 0;
