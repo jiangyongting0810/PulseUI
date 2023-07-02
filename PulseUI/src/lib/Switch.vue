@@ -1,5 +1,5 @@
 <template>
-  <button class="pulse-switch" @click="toggle" :class="{'pulse-checked':value}">
+  <button class="pulse-switch" @click="toggle" :class="{'pulse-checked':value}" :disabled="disabled">
     <span>
     </span>
   </button>
@@ -10,8 +10,13 @@
 <script lang="ts">
 export default{
   props:{
-    value:Boolean
+    value:Boolean,
+    disabled: {
+    type: Boolean,
+    default: false,
   },
+  },
+  
   setup(props,context){
     const toggle = ()=>{
       context.emit('update:value',!props.value)
