@@ -1,4 +1,4 @@
-import "./lib/gulu.scss"
+import "./lib/pulse.scss"
 import { createApp } from 'vue'
 import App from './App.vue'
 import './index.scss'

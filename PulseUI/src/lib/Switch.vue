@@ -1,5 +1,5 @@
 <template>
-  <button class="gulu-switch" @click="toggle" :class="{ 'gulu-checked': value }">
+  <button class="pulse-switch" @click="toggle" :class="{ 'pulse-checked': value }">
     <span></span>
   </button>
 </template>
@@ -18,7 +18,7 @@ const toggle = () => {
 $h: 22px;
 $h2: $h - 4px;
 
-.gulu-switch {
+.pulse-switch {
   height: $h;
   width: $h * 2;
   border: none;
@@ -37,7 +37,7 @@ $h2: $h - 4px;
     transition: all 250ms;
   }
 
-  &.gulu-checked {
+  &.pulse-checked {
     background: #1890ff;
 
     >span {
@@ -55,7 +55,7 @@ $h2: $h - 4px;
     }
   }
 
-  &.gulu-checked:active {
+  &.pulse-checked:active {
     >span {
       width: $h2 + 4px;
       margin-left: -4px;
