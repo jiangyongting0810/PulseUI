@@ -1,189 +1,133 @@
 <template>
-  <button class="pulse-button" :class="classes" :disabled="disabled">
-  <span v-if="loading" class="gulu-loadingIndicator"></span>
-    <slot />
-  </button>
+  <template v-if="visible">
+    <Teleport to="body">
+      <div class="gulu-dialog-overlay" @click="onClickOverlay"></div>
+      <div class="gulu-dialog-wrapper">
+        <div class="gulu-dialog">
+          <header>
+            <slot name="title" />
+            <span @click="close" class="gulu-dialog-close"></span>
+          </header>
+          <main>
+            <slot name="content" />
+          </main>
+          <footer>
+            <Button level="main" @click="onClickOk">OK</Button>
+            <Button @click="onClickCancel">Cancel</Button>
+          </footer>
+        </div>
+      </div>
+    </Teleport>
+  </template>
 </template>
-<script lang="ts">
-import { computed } from 'vue';
 
-export default{
-  props:{
-    theme:{
-    type:String,
-    default:'button'},
-    size:{
-      type:String,
-      default:'normal'
-    },
-    level:{
-      type:String,
-      default:'normal'
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    }
-  },
-  setup(props){
-    const { theme ,size, level} = props;
-    const classes = computed(()=>{
-      return {
-        [`pulse-theme-${theme}`]: theme,
-        [`pulse-size-${size}`]: size,
-        [`pulse-level-${level}`]:level,
-      }
-    })
-    return {classes}
+<script lang="ts" setup="props, context">
+import Button from "./Button.vue";
+
+const props = defineProps<{
+  visible?: boolean;
+  closeOnClickOverlay?: boolean;
+  ok?: () => boolean;
+  cancel?: () => void
+}>();
+
+const emit = defineEmits<{
+  (e: 'update:visible', visible: boolean): void
+}>()
+
+const close = () => {
+  emit('update:visible', false)
+}
+const onClickOverlay = () => {
+  if (props.closeOnClickOverlay) {
+    close()
   }
 }
-
+const onClickOk = () => {
+  if (props.ok?.() !== false) {
+    close()
+  }
+}
+const onClickCancel = () => {
+  props.cancel?.()
+  close()
+}
 </script>
+
 <style lang="scss">
-$h: 32px;
+$radius: 4px;
 $border-color: #d9d9d9;
-$color: #333;
-$green: #327261;
-$radius: 6px;
-$red: red;
-$grey: grey;
-.pulse-button {
-  box-sizing: border-box;
-  height: $h;
-  padding: 0 12px;
-  cursor: pointer;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  white-space: nowrap;
+
+.gulu-dialog {
   background: white;
-  color: $color;
-  border: 1px solid $border-color;
   border-radius: $radius;
-  box-shadow: 0 1px 0 fade-out(black, 0.95);
-  transition: background 250ms;
-  & + & {
-    margin-left: 8px;
+  box-shadow: 0 0 3px fade_out(black, 0.5);
+  min-width: 15em;
+  max-width: 90%;
+
+  &-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: fade_out(black, 0.5);
+    z-index: 10;
   }
-  &:hover,
-  &:focus {
-    color: $green;
-    border-color: $green;
+
+  &-wrapper {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 11;
   }
-  &:focus {
-    outline: none;
+
+  >header {
+    padding: 12px 16px;
+    border-bottom: 1px solid $border-color;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 20px;
   }
-  &::-moz-focus-inner {
-    border: 0;
+
+  >main {
+    padding: 12px 16px;
   }
-  &.pulse-theme-link{
-    border-color: transparent;
-    box-shadow: none;
-    color: $green;
-    &:hover,&:focus{
-      color: lighten($green, 10%);
-    }
+
+  >footer {
+    border-top: 1px solid $border-color;
+    padding: 12px 16px;
+    text-align: right;
   }
-  &.pulse-theme-text{
-    border-color: transparent;
-    box-shadow: none;
-    color: inherit;
-    background: none;
-    &:hover,&:focus{
-      background: darken(white, 5%);
-    }
-  }
-  &.pulse-size-big{
-    font-size:24px;
-    height: 48px;
-    padding: 0 16px;
-  }
-  &.pulse-size-small{
-    font-size: 12px;
-    height: 20px;
-    padding: 0 4px; 
-  }
-  &.pulse-theme-button {
-    &.pulse-level-main {
-      background: $green;
-      color: white;
-      border-color: $green;
-      &:hover,
-      &:focus {
-        background: darken($green, 10%);
-        border-color: darken($green, 10%);
-      }
-    }
-    &.pulse-level-danger {
-      background: $red;
-      border-color: $red;
-      color: white;
-      &:hover,
-      &:focus {
-        background: darken($red, 10%);
-        border-color: darken($red, 10%);
-      }
-    }
-  }
-  &.pulse-theme-link {
-    &.pulse-level-danger {
-      color: $red;
-      &:hover,
-      &:focus {
-        color: darken($red, 10%);
-      }
-    }
-  }
-  &.pulse-theme-text {
-    &.pulse-level-main {
-      color: $green;
-      &:hover,
-      &:focus {
-        color: darken($green, 10%);
-      }
-    }
-    &.pulse-level-danger {
-      color: $red;
-      &:hover,
-      &:focus {
-        color: darken($red, 10%);
-      }
-    }
-  }
-  &.pulse-theme-button {
-    &[disabled] {
-      cursor: not-allowed;
-      color: $grey;
-      &:hover {
-        border-color: $grey;
-      }
-    }
-  }
-  &.pulse-theme-link, &.pulse-theme-text {
-    &[disabled] {
-      cursor: not-allowed;
-      color: $grey;
-    }
-  }
-  > .gulu-loadingIndicator{
-    width: 14px;
-    height: 14px;
+
+  &-close {
+    position: relative;
     display: inline-block;
-    margin-right: 4px;
-    border-radius: 8px; 
-    border-color: $green $green $green transparent;
-    border-style: solid;
-    border-width: 2px;
-    animation: gulu-spin 1s infinite linear;
-  }
-  
-  @keyframes gulu-spin {
-    0%{transform: rotate(0deg)} 
-    100%{transform: rotate(360deg)} 
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      height: 1px;
+      background: black;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+    }
+
+    &::before {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    &::after {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
   }
 }
 </style>

@@ -1,5 +1,12 @@
 <template>
   <div>
-    <slot/>
+    <slot />
   </div>
-</template>
+  </template>
+  
+  <script lang="ts">
+  export default {
+    name: 'GuluTab'
+  }
+  </script>
+  
