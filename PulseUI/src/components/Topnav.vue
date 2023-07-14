@@ -1,6 +1,9 @@
 <template>
   <div class="topnav">
-      <div class="logo">LOGO</div>
+    <router-link to="/" class="logo">
+      <img :src="logo1">
+      <span>PULSEUI</span>
+    </router-link>
       <ul class="menu">
         <li>
           <router-link to="/doc">文档</router-link>
@@ -11,19 +14,22 @@
 </template>
 
 <script lang="ts">
-import { inject, Ref } from 'vue'
+import { inject, ref, Ref } from 'vue'
+import logo from '../assets/logo.png'
 export default{
   setup(){
     const menuVisible = inject<Ref<boolean>>('menuVisible')
     const toggleMenu = () => {
       menuVisible!.value = !menuVisible!.value
     }
-    return { toggleMenu }
+    const logo1 = ref(logo)
+    return { logo1,toggleMenu }
   }
 }
 </script>
 
 <style lang="scss" >
+
 
 .topnav{
     display: flex;
@@ -37,10 +43,26 @@ export default{
     z-index: 20;
     justify-content: center;
     align-items: center;
-    > .logo{
-      max-width: 6em;
+    > 
+    .logo{
+      max-width: 10em;
       margin-right: auto;
+      display: flex;
+      align-items: center;
+      > img{
+        width: 32px;
+        height: 32px;
+      }
+      > span{
+        margin-left: 10px;
+        font-weight: bold;
+
+      }
     }
+    // .logo{
+    //   width: 40px;
+    //   height: 40px;
+    // }
     >.menu{
       display: flex;
       white-space: nowrap;
