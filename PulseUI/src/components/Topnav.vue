@@ -9,7 +9,11 @@
           <router-link to="/doc">文档</router-link>
         </li>
       </ul>
-      <span class="toggleAside" @click="toggleMenu"></span>
+      <span class="toggleAside" @click="toggleMenu">
+        <svg>
+          <use xlink:href="#icon-caidan"></use>
+        </svg>
+      </span>
     </div>
 </template>
 
@@ -73,13 +77,18 @@ export default{
     >.toggleAside{
       width: 24px;
       height: 24px;
-      background: red;
+      // background: red;
       position: absolute;
       left: 16px;
       top: 50%;
       left: 16px;
       transform: translateY(-50%);
       display: none;
+      >svg {
+        grid-area: icon;
+        width: 24px;
+        height: 24px;
+      }
     }
     @media(max-width:500px){
       >.menu{
