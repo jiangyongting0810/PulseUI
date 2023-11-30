@@ -1,6 +1,11 @@
 <template>
   <div class="topnav">
-      <div class="logo">LOGO</div>
+      <div class="logo">
+        <router-link to="/" class="homes">
+          <img src="../assets/SVG/Home.svg" class="home">
+          <span>首页</span>
+        </router-link>
+      </div>
       <ul class="menu">
         <li>
           <router-link to="/doc">文档</router-link>
@@ -71,5 +76,18 @@ export default{
       }
     }
   }
+  .homes{
+    // border: 1px solid red;
+    display: flex;
+    align-items: center;
+    >span {
+      margin-top: 3px;
+      // line-height: 30px;
+    }
+    >.home{
+    width: 30px;
+  }
+  }
+  
 </style>
   
