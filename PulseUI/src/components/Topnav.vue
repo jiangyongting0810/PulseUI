@@ -49,6 +49,7 @@ export default{
     z-index: 20;
     justify-content: center;
     align-items: center;
+    // background: lightblue;
     > 
     .logo{
       max-width: 10em;
@@ -79,7 +80,8 @@ export default{
     >.toggleAside{
       width: 24px;
       height: 24px;
-      // background: red;
+      background-image: url(../assets/logo.png);
+      background-size: 100% 100%;
       position: absolute;
       left: 16px;
       top: 50%;
