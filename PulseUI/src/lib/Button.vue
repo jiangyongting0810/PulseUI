@@ -1,56 +1,40 @@
 <template>
-  <button class="pulse-button" :class="classes" :disabled="disabled">
-  <span v-if="loading" class="gulu-loadingIndicator"></span>
+  <button class="pulse-button" :class="classes" :disabled="disabled" @click="$emit('click', $event)">
+    <span v-if="loading" class="pulse-loadingIndicator"></span>
     <slot />
   </button>
 </template>
-<script lang="ts">
-import { computed } from 'vue';
+<script lang="ts" setup="props">
+import { computed } from "vue";
+const props = defineProps<{
+  theme?: 'button' | 'text' | 'link';
+  size?: 'normal' | 'big' | 'small';
+  level?: 'normal' | 'main' | 'danger';
+  disabled?: boolean;
+  loading?: boolean;
+}>();
+const { theme, size, level } = props;
 
-export default{
-  props:{
-    theme:{
-    type:String,
-    default:'button'},
-    size:{
-      type:String,
-      default:'normal'
-    },
-    level:{
-      type:String,
-      default:'normal'
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    loading: {
-      type: Boolean,
-      default: false
-    }
-  },
-  setup(props){
-    const { theme ,size, level} = props;
-    const classes = computed(()=>{
-      return {
-        [`pulse-theme-${theme}`]: theme,
-        [`pulse-size-${size}`]: size,
-        [`pulse-level-${level}`]:level,
-      }
-    })
-    return {classes}
-  }
-}
-
+defineEmits<{
+  (e: 'click', event: MouseEvent): void
+}>()
+const classes = computed(() => {
+  return {
+    [`pulse-theme-${theme}`]: theme,
+    [`pulse-size-${size}`]: size,
+    [`pulse-level-${level}`]: level,
+  };
+});
 </script>
 <style lang="scss">
 $h: 32px;
 $border-color: #d9d9d9;
 $color: #333;
-$green: #327261;
-$radius: 6px;
+$blue: #40a9ff;
+$radius: 4px;
 $red: red;
 $grey: grey;
+
 .pulse-button {
   box-sizing: border-box;
   height: $h;
@@ -66,62 +50,77 @@ $grey: grey;
   border-radius: $radius;
   box-shadow: 0 1px 0 fade-out(black, 0.95);
   transition: background 250ms;
-  & + & {
+
+  &+& {
     margin-left: 8px;
   }
+
   &:hover,
   &:focus {
-    color: $green;
-    border-color: $green;
+    color: $blue;
+    border-color: $blue;
   }
+
   &:focus {
     outline: none;
   }
+
   &::-moz-focus-inner {
     border: 0;
   }
-  &.pulse-theme-link{
+
+  &.pulse-theme-link {
     border-color: transparent;
     box-shadow: none;
-    color: $green;
-    &:hover,&:focus{
-      color: lighten($green, 10%);
+    color: $blue;
+
+    &:hover,
+    &:focus {
+      color: lighten($blue, 10%);
     }
   }
-  &.pulse-theme-text{
+
+  &.pulse-theme-text {
     border-color: transparent;
     box-shadow: none;
     color: inherit;
-    background: none;
-    &:hover,&:focus{
+
+    &:hover,
+    &:focus {
       background: darken(white, 5%);
     }
   }
-  &.pulse-size-big{
-    font-size:24px;
+
+  &.pulse-size-big {
+    font-size: 24px;
     height: 48px;
     padding: 0 16px;
   }
-  &.pulse-size-small{
+
+  &.pulse-size-small {
     font-size: 12px;
     height: 20px;
-    padding: 0 4px; 
+    padding: 0 4px;
   }
+
   &.pulse-theme-button {
     &.pulse-level-main {
-      background: $green;
+      background: $blue;
       color: white;
-      border-color: $green;
+      border-color: $blue;
+
       &:hover,
       &:focus {
-        background: darken($green, 10%);
-        border-color: darken($green, 10%);
+        background: darken($blue, 10%);
+        border-color: darken($blue, 10%);
       }
     }
+
     &.pulse-level-danger {
       background: $red;
       border-color: $red;
       color: white;
+
       &:hover,
       &:focus {
         background: darken($red, 10%);
@@ -129,61 +128,77 @@ $grey: grey;
       }
     }
   }
+
   &.pulse-theme-link {
     &.pulse-level-danger {
       color: $red;
+
       &:hover,
       &:focus {
         color: darken($red, 10%);
       }
     }
   }
+
   &.pulse-theme-text {
     &.pulse-level-main {
-      color: $green;
+      color: $blue;
+
       &:hover,
       &:focus {
-        color: darken($green, 10%);
+        color: darken($blue, 10%);
       }
     }
+
     &.pulse-level-danger {
       color: $red;
+
       &:hover,
       &:focus {
         color: darken($red, 10%);
       }
     }
   }
+
   &.pulse-theme-button {
     &[disabled] {
       cursor: not-allowed;
       color: $grey;
+
       &:hover {
         border-color: $grey;
       }
     }
   }
-  &.pulse-theme-link, &.pulse-theme-text {
+
+  &.pulse-theme-link,
+  &.pulse-theme-text {
     &[disabled] {
       cursor: not-allowed;
       color: $grey;
     }
   }
-  > .gulu-loadingIndicator{
+
+  >.pulse-loadingIndicator {
     width: 14px;
     height: 14px;
     display: inline-block;
     margin-right: 4px;
-    border-radius: 8px; 
-    border-color: $green $green $green transparent;
+    border-radius: 8px;
+    border-color: $blue $blue $blue transparent;
     border-style: solid;
     border-width: 2px;
-    animation: gulu-spin 1s infinite linear;
+    animation: pulse-spin 1s infinite linear;
   }
-  
-  @keyframes gulu-spin {
-    0%{transform: rotate(0deg)} 
-    100%{transform: rotate(360deg)} 
+}
+
+@keyframes pulse-spin {
+  0% {
+    transform: rotate(0deg)
+  }
+
+  100% {
+    transform: rotate(360deg)
   }
 }
 </style>

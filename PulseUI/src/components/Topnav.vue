@@ -11,24 +11,31 @@
           <router-link to="/doc">文档</router-link>
         </li>
       </ul>
-      <span class="toggleAside" @click="toggleMenu"></span>
+      <span class="toggleAside" @click="toggleMenu">
+        <svg>
+          <use xlink:href="#icon-caidan"></use>
+        </svg>
+      </span>
     </div>
 </template>
 
 <script lang="ts">
-import { inject, Ref } from 'vue'
+import { inject, ref, Ref } from 'vue'
+import logo from '../assets/logo.png'
 export default{
   setup(){
     const menuVisible = inject<Ref<boolean>>('menuVisible')
     const toggleMenu = () => {
       menuVisible!.value = !menuVisible!.value
     }
-    return { toggleMenu }
+    const logo1 = ref(logo)
+    return { logo1,toggleMenu }
   }
 }
 </script>
 
 <style lang="scss" >
+
 
 .topnav{
     display: flex;
@@ -42,10 +49,26 @@ export default{
     z-index: 20;
     justify-content: center;
     align-items: center;
-    > .logo{
-      max-width: 6em;
+    > 
+    .logo{
+      max-width: 10em;
       margin-right: auto;
+      display: flex;
+      align-items: center;
+      > img{
+        width: 32px;
+        height: 32px;
+      }
+      > span{
+        margin-left: 10px;
+        font-weight: bold;
+
+      }
     }
+    // .logo{
+    //   width: 40px;
+    //   height: 40px;
+    // }
     >.menu{
       display: flex;
       white-space: nowrap;
@@ -56,13 +79,18 @@ export default{
     >.toggleAside{
       width: 24px;
       height: 24px;
-      background: red;
+      // background: red;
       position: absolute;
       left: 16px;
       top: 50%;
       left: 16px;
       transform: translateY(-50%);
       display: none;
+      >svg {
+        grid-area: icon;
+        width: 24px;
+        height: 24px;
+      }
     }
     @media(max-width:500px){
       >.menu{
